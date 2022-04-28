@@ -166,9 +166,7 @@ func generateMarkdown(apiDocs []jsonnetFile) (string, error) {
 	for _, jfile := range apiDocs {
 		md = append(md, fmt.Sprintf("# %s", filepath.Base(jfile.Name)))
 		for _, jfunc := range jfile.Functions {
-			if jfunc.Name == "" {
-				md = append(md, fmt.Sprintf("## %s", jfile.Name))
-			} else {
+			if jfunc.Name != "" {
 				md = append(md, fmt.Sprintf("## %s", jfunc.Name))
 			}
 			md = append(md, jfunc.Description)
