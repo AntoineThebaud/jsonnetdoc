@@ -20,6 +20,9 @@ all: build test
 build:
 	CGO_ENABLED=0 GOARCH=${GOARCH} $(GO) build -a -installsuffix  cgo ${LDFLAGS} -o bin/${API_BINARY}
 
+install:
+	go install
+
 test:
 	go test
 
