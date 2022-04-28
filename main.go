@@ -164,7 +164,7 @@ func parseJsonnetFile(p string) (jf jsonnetFile, err error) {
 func generateMarkdown(apiDocs []jsonnetFile) (string, error) {
 	md := []string{}
 	for _, jfile := range apiDocs {
-		md = append(md, fmt.Sprintf("# %s", jfile.Name))
+		md = append(md, fmt.Sprintf("# %s", filepath.Base(jfile.Name)))
 		for _, jfunc := range jfile.Functions {
 			if jfunc.Name == "" {
 				md = append(md, fmt.Sprintf("## %s", jfile.Name))

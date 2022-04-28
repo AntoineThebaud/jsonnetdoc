@@ -15,7 +15,7 @@ PKG_LDFLAGS := github.com/prometheus/common/version
 # Setup the -ldflags option for go build here, interpolate the variable values
 LDFLAGS := -ldflags "-X ${PKG_LDFLAGS}.Version=${VERSION} -X ${PKG_LDFLAGS}.Revision=${COMMIT} -X ${PKG_LDFLAGS}.BuildDate=${DATE} -X ${PKG_LDFLAGS}.Branch=${BRANCH}"
 
-all: build test
+all: build
 
 build:
 	CGO_ENABLED=0 GOARCH=${GOARCH} $(GO) build -a -installsuffix  cgo ${LDFLAGS} -o bin/${API_BINARY}
