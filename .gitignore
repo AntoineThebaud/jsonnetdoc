@@ -1,0 +1,7 @@
+bin/
+cover*
+report*
+config.yaml
+.idea*
+test-coverage-profile.out
+vendor/
