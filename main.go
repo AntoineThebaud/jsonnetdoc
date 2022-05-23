@@ -165,15 +165,22 @@ func parseJsonnetFile(p string) (jf jsonnetFile, err error) {
 
 func generateMarkdown(apiDocs []jsonnetFile) (string, error) {
 	md := []string{}
+
 	for _, jfile := range apiDocs {
 		md = append(md, fmt.Sprintf("# %s", filepath.Base(jfile.Name)))
 		md = append(md, emptyLine)
+
 		for _, jfunc := range jfile.Functions {
 			if jfunc.Name != "" {
-				md = append(md, fmt.Sprintf("## %s\n", jfunc.Name))
+				md = append(md, fmt.Sprintf("## %s", jfunc.Name))
+				md = append(md, emptyLine)
 			}
-			md = append(md, jfunc.Description)
-			md = append(md, emptyLine)
+
+			if jfunc.Description != "" {
+				md = append(md, jfunc.Description)
+				md = append(md, emptyLine)
+			}
+
 			if len(jfunc.Params) > 0 {
 				md = append(md, "@params")
 				md = append(md, emptyLine)
@@ -187,6 +194,7 @@ func generateMarkdown(apiDocs []jsonnetFile) (string, error) {
 				}
 				md = append(md, emptyLine)
 			}
+
 			if len(jfunc.Methods) > 0 {
 				md = append(md, "@methods")
 				md = append(md, emptyLine)
@@ -200,6 +208,7 @@ func generateMarkdown(apiDocs []jsonnetFile) (string, error) {
 				}
 				md = append(md, emptyLine)
 			}
+
 			if jfunc.Return != "" {
 				md = append(md, fmt.Sprintf("@return %s", jfunc.Return))
 				md = append(md, emptyLine)
