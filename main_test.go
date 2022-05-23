@@ -135,15 +135,11 @@ func TestGenerateMarkdown(t *testing.T) {
 	}{
 		"foo": {
 			path: "testdata/foo.jsonnet",
-			expect: `# API Docs
-
-Generated API documentation from JSDoc style comments.
+			expect: `# foo
 
 ## foo.new
+
 Description text, file: foo, function: new
-
-
-
 
 @params
 
@@ -158,7 +154,8 @@ Description text, file: foo, function: new
 * **addBar(bar)**: adds a bar
 * **addFoo(foo)**: adds a foo
 
-@return a new "foo"`,
+@return a new "foo"
+`,
 		},
 	}
 	for testName, test := range tests {
@@ -171,7 +168,7 @@ Description text, file: foo, function: new
 			t.Errorf("Unexpected error parsing markdown: %s", err)
 		}
 		if md != test.expect {
-			t.Errorf("Expected:\n\n%s\n\ngot:\n\n%s", test.expect, md)
+			t.Errorf("Expected:\n-------------\n%s\n-------------\n\ngot:\n-------------\n%s\n-------------", test.expect, md)
 		}
 	}
 }

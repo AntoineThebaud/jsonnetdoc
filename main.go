@@ -29,6 +29,8 @@ type jsonnetFile struct {
 	Functions []jsonnetFunction `json:"functions"`
 }
 
+const emptyLine = ""
+
 func main() {
 	rootCmd := &cli.Command{
 		Use:   "jsonnetdoc <input-file|dir>",
@@ -165,13 +167,16 @@ func generateMarkdown(apiDocs []jsonnetFile) (string, error) {
 	md := []string{}
 	for _, jfile := range apiDocs {
 		md = append(md, fmt.Sprintf("# %s", filepath.Base(jfile.Name)))
+		md = append(md, emptyLine)
 		for _, jfunc := range jfile.Functions {
 			if jfunc.Name != "" {
-				md = append(md, fmt.Sprintf("## %s", jfunc.Name))
+				md = append(md, fmt.Sprintf("## %s\n", jfunc.Name))
 			}
 			md = append(md, jfunc.Description)
+			md = append(md, emptyLine)
 			if len(jfunc.Params) > 0 {
-				md = append(md, "@params\n")
+				md = append(md, "@params")
+				md = append(md, emptyLine)
 				params := make([]string, 0, len(jfunc.Params))
 				for k := range jfunc.Params {
 					params = append(params, k)
@@ -180,9 +185,11 @@ func generateMarkdown(apiDocs []jsonnetFile) (string, error) {
 				for _, param := range params {
 					md = append(md, fmt.Sprintf("* **%s**: %s", param, jfunc.Params[param]))
 				}
+				md = append(md, emptyLine)
 			}
 			if len(jfunc.Methods) > 0 {
-				md = append(md, "\n@methods\n")
+				md = append(md, "@methods")
+				md = append(md, emptyLine)
 				methods := make([]string, 0, len(jfunc.Methods))
 				for k := range jfunc.Methods {
 					methods = append(methods, k)
@@ -191,9 +198,11 @@ func generateMarkdown(apiDocs []jsonnetFile) (string, error) {
 				for _, method := range methods {
 					md = append(md, fmt.Sprintf("* **%s**: %s", method, jfunc.Methods[method]))
 				}
+				md = append(md, emptyLine)
 			}
 			if jfunc.Return != "" {
-				md = append(md, fmt.Sprintf("\n@return %s", jfunc.Return))
+				md = append(md, fmt.Sprintf("@return %s", jfunc.Return))
+				md = append(md, emptyLine)
 			}
 		}
 	}
