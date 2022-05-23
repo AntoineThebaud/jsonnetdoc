@@ -1,4 +1,4 @@
-module github.com/trotttrotttrott/jsonnetdoc
+module github.com/AntoineThebaud/jsonnetdoc
 
 go 1.14
 
