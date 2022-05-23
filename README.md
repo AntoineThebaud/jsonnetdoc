@@ -10,7 +10,11 @@ See [testdata/](./testdata) for documentation examples.
 
 ## Installation
 
-Clone the repo and use one of the usual Go installation methods like `go install`.
+```
+go install github.com/AntoineThebaud/jsonnetdoc@master
+```
+
+Or clone the repo to build jsonnetdoc from source.
 
 ## Usage
 
