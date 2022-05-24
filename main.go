@@ -102,23 +102,31 @@ func parseJsonnetFile(p string) (jf jsonnetFile, err error) {
 	_, f := path.Split(p)
 	name := strings.TrimSuffix(f, path.Ext(f))
 	jf.Name = name
+
 	content, err := ioutil.ReadFile(p)
 	if err != nil {
 		return
 	}
+
 	r := regexp.MustCompile(`/\*\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/`)
 	docs := r.FindAll(content, -1)
+
 	for _, doc := range docs {
 		var desc [][]byte
 		descRegexp := regexp.MustCompile(`(\* [^@].+|\s\*$)`)
+
 		var name []byte
 		nameRegexp := regexp.MustCompile(`\* @name.+`)
+
 		params := map[string]string{}
 		paramRegexp := regexp.MustCompile(`\* @param.+`)
+
 		methods := map[string]string{}
 		methodRegexp := regexp.MustCompile(`\* @method.+`)
+
 		var retrn []byte
 		retrnRegexp := regexp.MustCompile(`\* @return.+`)
+
 		for _, l := range bytes.Split(doc, []byte("\n")) {
 			switch {
 			case descRegexp.Match(l):
@@ -149,6 +157,7 @@ func parseJsonnetFile(p string) (jf jsonnetFile, err error) {
 				retrn = bytes.TrimPrefix(bytes.TrimLeft(l, " "), []byte("* @return "))
 			}
 		}
+
 		jf.Functions = append(
 			jf.Functions,
 			jsonnetFunction{
