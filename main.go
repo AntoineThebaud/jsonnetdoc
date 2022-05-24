@@ -113,7 +113,7 @@ func parseJsonnetFile(p string) (jf jsonnetFile, err error) {
 
 	for _, doc := range docs {
 		var desc [][]byte
-		descRegexp := regexp.MustCompile(`(\* [^@].+|\s\*$)`)
+		descRegexp := regexp.MustCompile(`(^[\s]*\* [^@\n\r][ ]*[^\s].+$)`)
 
 		var name []byte
 		nameRegexp := regexp.MustCompile(`\* @name.+`)
@@ -169,6 +169,7 @@ func parseJsonnetFile(p string) (jf jsonnetFile, err error) {
 			},
 		)
 	}
+
 	return
 }
 
